@@ -1,5 +1,5 @@
-#ifndef HOLBERTON_H
-#define HOLBERTON_H
+#ifndef MAIN_H
+#define MAIN_H
 
 typedef struct Cspecs {
 	char cs;
@@ -9,6 +9,6 @@ typedef struct Cspecs {
 void _putchar_c(char c);
 void _putchar(va_list a);
 void print_str(va_list a);
-int _printf(const char *format, ...);
+int _printf(const char *format, ...);
 
 #endif
