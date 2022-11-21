@@ -2,7 +2,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "holberton.h"
+#include "main.h"
 
 void _putchar_c(char c)
 {
