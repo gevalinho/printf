@@ -5,18 +5,17 @@
 #include "main.h"
 
 /**
- *  _putchar_c writes a character (an unsigned char) specified by the argument char to stdout.
- *  @c character agument
+ *  _putchar_c - writes a character (an unsigned char) specified
+ *  by the argument char to stdout.
+ *  @c: character agument
  */
-
 void _putchar_c(char c)
 {
 write(1, &c, 1);
 }
-
 /**
- * _putchar writes a character for variadic functions
- * @a aguement
+ * _putchar - writes a character for variadic functions
+ * @a: aguement
  */
 void _putchar(va_list a)
 {
@@ -24,7 +23,10 @@ char c;
 c = va_arg(a, int);
 write(1, &c, 1);
 }
-
+/**
+ * print_str - prints array of strings
+ * @a: variadic list libry
+ */
 void print_str(va_list a)
 {
 char *c;
@@ -34,16 +36,16 @@ while (*c != '\0')
 _putchar_c(*c++);
 }
 }
-
+/**
+ * print_int - void function
+ */
 void print_int(void)
 { }
-
 /**
  *  _printf - prints output according to a format.
  *  @format: input string.
  *  Return: int, number of characters printed,
  */
-
 int _printf(const char *format, ...)
 {
 va_list a;
@@ -55,10 +57,8 @@ cs_t cspec[] = {
 {'d', print_int},
 {'i', print_int}
 };
-
 if (format == NULL)
 return (0);
-
 i = j = count = 0;
 va_start(a, format);
 while (format[i])
