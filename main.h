@@ -1,12 +1,12 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-/**
- * Cspecs- struct of  function pointer
- *
+/*
+ * typedef struct Cspecs - struct of  function pointer
  */
 typedef struct Cspecs
 {
+/* Cspecs: 'struct of function pointer' */
 char cs;
 void (*f)();
 } cs_t;
