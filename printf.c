@@ -1,88 +1,61 @@
-#include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include "main.h"
 
 /**
- *  _putchar_c - writes a character (an unsigned char) specified
- *  by the argument char to stdout.
- *  @c: character agument
+ *  print_va_args - matches the conversion specifier to the correct
+ *  fucntion for printing the variable argument.
+ *  @c: conversion specifier.
+ *  @a: variable argument list.
+ *  Return: int, number of characters printed.
  */
-void _putchar_c(char c)
+
+int print_va_args(char c, va_list a)
 {
-write(1, &c, 1);
-}
-/**
- * _putchar - writes a character for variadic functions
- * @a: aguement
- */
-void _putchar(va_list a)
-{
-char c;
-c = va_arg(a, int);
-write(1, &c, 1);
-}
-/**
- * print_str - prints array of strings
- * @a: variadic list libry
- */
-void print_str(va_list a)
-{
-char *c;
-c = va_arg(a, char *);
-while (*c != '\0')
-{
-_putchar_c(*c++);
-}
-}
-/**
- * print_int - void function
- */
-void print_int(void)
-{ }
-/**
- *  _printf - prints output according to a format.
- *  @format: input string.
- *  Return: int, number of characters printed,
- */
-int _printf(const char *format, ...)
-{
-va_list a;
-int i, j, count;
+int i;
 
 cs_t cspec[] = {
 {'c', _putchar},
 {'s', print_str},
 {'d', print_int},
-{'i', print_int}
+{'i', print_int},
 };
+
+for (i = 0; i < 4; i++)
+{
+if (cspec[i].cs == c)
+return (cspec[i].f(a));
+}
+return (_putchar_c(c));
+}
+
+
+/**
+ *  _printf - prints output according to a format.
+ *  @format: input string.
+ *  Return: int, number of characters printed.
+ */
+
+int _printf(const char *format, ...)
+{
+va_list a;
+int i, count;
+
 if (format == NULL)
 return (0);
-i = j = count = 0;
+
+count = 0;
 va_start(a, format);
-while (format[i])
+for (i = 0; format[i]; i++)
 {
 if (format[i] == '%')
 {
-j = 0;
-while (j < 4)
-{
-if (format[i + 1] == cspec[j].cs &&
-format[i + 1] != '%')
-{
-cspec[j].f(a);
+count += print_va_args(format[i + 1], a);
 i++;
-}
-j++;
-}
-i++;
-_putchar_c(format[i]);
 }
 else
-_putchar_c(format[i]);
-count++;
-i++;
+count += _putchar_c(format[i]);
 }
+va_end(a);
 return (count);
 }
