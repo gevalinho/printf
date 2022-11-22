@@ -1,61 +1,98 @@
 #include <stdarg.h>
-#include <stdlib.h>
+#include <unistd.h>
 #include "main.h"
 
 /**
- *  print_va_args - matches the conversion specifier to the correct
- *  fucntion for printing the variable argument.
- *  @c: conversion specifier.
- *  @a: variable argument list.
- *  Return: int, number of characters printed.
+ *  _putchar_c - prints a character.
+ *  @c: character input.
+ *  Return: int, bytes written.
  */
 
-int print_va_args(char c, va_list a)
+int _putchar_c(char c)
 {
-int i;
-
-cs_t cspec[] = {
-{'c', _putchar},
-{'s', print_str},
-{'d', print_int},
-{'i', print_int},
-};
-
-for (i = 0; i < 4; i++)
-{
-if (cspec[i].cs == c)
-return (cspec[i].f(a));
+write(1, &c, 1);
+return (1);
 }
-return (_putchar_c(c));
-}
-
 
 /**
- *  _printf - prints output according to a format.
- *  @format: input string.
- *  Return: int, number of characters printed.
+ *  _putchar - prints a character.
+ *  @a: va_list input.
+ *  Return: int, bytes written.
  */
 
-int _printf(const char *format, ...)
+int _putchar(va_list a)
 {
-va_list a;
-int i, count;
+char c;
 
-if (format == NULL)
-return (0);
+c = va_arg(a, int);
+write(1, &c, 1);
+return (1);
+}
+
+/**
+ *  print_str - prints a string.
+ *  @a: input string.
+ *  Return: int, bytes written.
+ */
+
+int print_str(va_list a)
+{
+int n;
+char *s;
+
+s = va_arg(a, char *);
+n = 0;
+while (*s != '\0')
+{
+write(1, s, 1);
+s++;
+n++;
+}
+return (n);
+}
+
+/**
+ *  print_uint - prints unsigned int.
+ *  @n: int input.
+ *  Return: int, bytes written.
+ */
+
+int print_uint(unsigned int n)
+{
+static int count;
+int digit;
 
 count = 0;
-va_start(a, format);
-for (i = 0; format[i]; i++)
+if (n / 10 != 0)
 {
-if (format[i] == '%')
+count++;
+print_uint(n / 10);
+}
+digit = ((n % 10) + '0');
+write(1, &digit, 1);
+return (count);
+}
+
+/**
+ *  print_int - prints int.
+ *  @a: input.
+ *  Return: int, bytes written.
+ */
+
+int print_int(va_list a)
 {
-count += print_va_args(format[i + 1], a);
-i++;
+char sign;
+int n, count;
+
+n = va_arg(a, int);
+count = 0;
+sign = '-';
+if (n < 0)
+{
+write(1, &sign, 1);
+n = -n;
+count++;
 }
-else
-count += _putchar_c(format[i]);
-}
-va_end(a);
+count += print_uint((unsigned int) n);
 return (count);
 }
