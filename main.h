@@ -1,10 +1,14 @@
-
 #ifndef MAIN_H
 #define MAIN_H
 
-typedef struct Cspecs {
-    char cs;
-    void (*f)();
+/**
+ * Cspecs- struct of  function pointer
+ *
+ */
+typedef struct Cspecs
+{
+char cs;
+void (*f)();
 } cs_t;
 
 void _putchar_c(char c);
